@@ -1,0 +1,25 @@
+#footer {
+    text-align: center;
+    box-shadow: 0 0 15px #00214B;
+    width: 440px;
+    margin-top: 57em;
+    margin-left: 41em;
+    opacity: .5;
+    
+    text-align: center;
+}
+
+#footer:hover {
+    opacity: 1;
+}
+
+.icon{
+    filter: invert(61%) sepia(53%) saturate(6958%) hue-rotate(178deg) brightness(105%) contrast(98%);
+    padding-right: .5em;
+    padding-left: .5em;
+    opacity: .5;
+}
+
+.icon:hover {
+    opacity: 1;
+}
