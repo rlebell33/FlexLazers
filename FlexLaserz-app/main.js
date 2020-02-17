@@ -1,4 +1,4 @@
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, desktopCapturer} = require('electron')
     const url = require("url");
     const path = require("path");
 
@@ -22,7 +22,7 @@ const {app, BrowserWindow} = require('electron')
         })
       );
       // Open the DevTools.
-      //mainWindow.webContents.openDevTools()
+      mainWindow.webContents.openDevTools()
 
       mainWindow.on('closed', function () {
         mainWindow = null
