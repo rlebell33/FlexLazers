@@ -2,7 +2,7 @@
     text-align: center;
     box-shadow: 0 0 15px #00214B;
     width: 440px;
-    margin-top: 57em;
+    margin-top: -4em;
     margin-left: 41em;
     opacity: .5;
     
@@ -23,3 +23,7 @@
 .icon:hover {
     opacity: 1;
 }
+
+
+#container { position: relative; }
+canvas { border: none; }
