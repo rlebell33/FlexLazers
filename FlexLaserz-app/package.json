@@ -6,7 +6,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "test": "ng test",
+    "test": "mocha",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "start-e": "ng build --base-href ./ && electron ."
@@ -33,6 +33,8 @@
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
     "codelyzer": "^5.1.2",
     "electron": "^8.0.1",
     "jasmine-core": "~3.5.0",
@@ -42,7 +44,9 @@
     "karma-coverage-istanbul-reporter": "~2.1.0",
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.2",
+    "mocha": "^7.0.1",
     "protractor": "~5.4.3",
+    "spectron": "^10.0.1",
     "ts-node": "~8.3.0",
     "tslint": "~5.18.0",
     "typescript": "~3.7.5"
