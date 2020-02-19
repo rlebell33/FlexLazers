@@ -1,4 +1,4 @@
-const {app, BrowserWindow, desktopCapturer} = require('electron')
+const {app, BrowserWindow} = require('electron')
     const url = require("url");
     const path = require("path");
 
@@ -6,16 +6,16 @@ const {app, BrowserWindow, desktopCapturer} = require('electron')
       const mainWindow = new BrowserWindow({
         width: 500,
         height: 500,
-        fullscreen: true,
-        // frame:false,
+        frame:false,
         transparent: true,
         webPreferences: {
           nodeIntegration: true
         }
       })
-
+      console.log(url)
       mainWindow.loadURL(
         url.format({
+          
           pathname: path.join(__dirname, `/dist/index.html`),
           protocol: "file:",
           slashes: true
