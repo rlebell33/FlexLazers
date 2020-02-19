@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component,Input, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
+import { fromEvent } from 'rxjs';
+import { switchMap, takeUntil, pairwise } from 'rxjs/operators'
 
 @Component({
   selector: 'app-root',
@@ -7,126 +9,74 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'FlexLaserz-app';
+  @ViewChild('canvas') public canvas: ElementRef;
 
-  /* © 2009 ROBO Design
- * http://www.robodesign.ro
- */
+  @Input() public width =1900;
+  @Input() public height = 957;
 
-// Keep everything in anonymous function, called on window load.
-if(window.addEventListener) {
-  window.addEventListener('load', function () {
-    var canvas, context;
+  private cx: CanvasRenderingContext2D;
+
+  public ngAfterViewInit() {
+    const canvasEl: HTMLCanvasElement = this.canvas.nativeElement;
+    this.cx = canvasEl.getContext('2d');
+
+    canvasEl.width = this.width;
+    canvasEl.height = this.height;
+
+    this.cx.lineWidth = 3;
+    this.cx.lineCap = 'round';
+    this.cx.strokeStyle = '#000';
+
+    this.captureEvents(canvasEl);
+  }
   
-    // The active tool instance.
-    var tool;
-    var tool_default = 'pencil';
+  private captureEvents(canvasEl: HTMLCanvasElement) {
+    // this will capture all mousedown events from the canvas element
+    fromEvent(canvasEl, 'mousedown')
+      .pipe(
+        switchMap((e) => {
+          // after a mouse down, we'll record all mouse moves
+          return fromEvent(canvasEl, 'mousemove')
+            .pipe(
+              // we'll stop (and unsubscribe) once the user releases the mouse
+              // this will trigger a 'mouseup' event    
+              takeUntil(fromEvent(canvasEl, 'mouseup')),
+              // we'll also stop (and unsubscribe) once the mouse leaves the canvas (mouseleave event)
+              takeUntil(fromEvent(canvasEl, 'mouseleave')),
+              // pairwise lets us get the previous value to draw a line from
+              // the previous point to the current point    
+              pairwise()
+            )
+        })
+      )
+      .subscribe((res: [MouseEvent, MouseEvent]) => {
+        const rect = canvasEl.getBoundingClientRect();
   
-    function init () {
-      // Find the canvas element.
-      canvas = document.getElementById('imageView');
-      if (!canvas) {
-        alert('Error: I cannot find the canvas element!');
-        return;
-      }
+        // previous and current position with the offset
+        const prevPos = {
+          x: res[0].clientX - rect.left,
+          y: res[0].clientY - rect.top
+        };
   
-      if (!canvas.getContext) {
-        alert('Error: no canvas.getContext!');
-        return;
-      }
+        const currentPos = {
+          x: res[1].clientX - rect.left,
+          y: res[1].clientY - rect.top
+        };
   
-      // Get the 2D canvas context.
-      context = canvas.getContext('2d');
-      if (!context) {
-        alert('Error: failed to getContext!');
-        return;
-      }
-  
-      // Get the tool select input.
-      var tool_select = document.getElementById('dtool');
-      if (!tool_select) {
-        alert('Error: failed to get the dtool element!');
-        return;
-      }
-      tool_select.addEventListener('change', ev_tool_change, false);
-  
-      // Activate the default tool.
-      if (tools[tool_default]) {
-        tool = new tools[tool_default]();
-        tool_select.value = tool_default;
-      }
-  
-      // Attach the mousedown, mousemove and mouseup event listeners.
-      canvas.addEventListener('mousedown', ev_canvas, false);
-      canvas.addEventListener('mousemove', ev_canvas, false);
-      canvas.addEventListener('mouseup',   ev_canvas, false);
+        // this method we'll implement soon to do the actual drawing
+        this.drawOnCanvas(prevPos, currentPos);
+      });
+  }
+
+  private drawOnCanvas(prevPos: { x: number, y: number }, currentPos: { x: number, y: number }) {
+    if (!this.cx) { return; }
+
+    this.cx.beginPath();
+
+    if (prevPos) {
+      this.cx.moveTo(prevPos.x, prevPos.y); // from
+      this.cx.lineTo(currentPos.x, currentPos.y);
+      this.cx.stroke();
     }
-  
-    // The general-purpose event handler. This function just determines the mouse 
-    // position relative to the canvas element.
-    function ev_canvas (ev) {
-      if (ev.layerX || ev.layerX == 0) { // Firefox
-        ev._x = ev.layerX;
-        ev._y = ev.layerY;
-      } else if (ev.offsetX || ev.offsetX == 0) { // Opera
-        ev._x = ev.offsetX;
-        ev._y = ev.offsetY;
-      }
-  
-      // Call the event handler of the tool.
-      var func = tool[ev.type];
-      if (func) {
-        func(ev);
-      }
-    }
-  
-    // The event handler for any changes made to the tool selector.
-    function ev_tool_change (ev) {
-      if (tools[this.value]) {
-        tool = new tools[this.value]();
-      }
-    }
-  
-  
-    // This object holds the implementation of each drawing tool.
-    var tools = {};
-  
-    // The drawing pencil.
-    tools.pencil = function () {
-      var tool = this;
-      this.started = false;
-  
-      // This is called when you start holding down the mouse button.
-      // This starts the pencil drawing.
-      this.mousedown = function (ev) {
-          context.beginPath();
-          context.moveTo(ev._x, ev._y);
-          tool.started = true;
-      };
-  
-      // This function is called every time you move the mouse. Obviously, it only 
-      // draws if the tool.started state is set to true (when you are holding down 
-      // the mouse button).
-      this.mousemove = function (ev) {
-        if (tool.started) {
-          context.lineTo(ev._x, ev._y);
-          context.stroke();
-        }
-      };
-  
-      // This is called when you release the mouse button.
-      this.mouseup = function (ev) {
-        if (tool.started) {
-          tool.mousemove(ev);
-          tool.started = false;
-        }
-      };
-    };
-  
-    init();
-  
-  }, false); }
-  
-  // vim:set spell spl=en fo=wan1croql tw=80 ts=2 sw=2 sts=2 sta et ai cin fenc=utf-8 ff=unix:
-  
-  
+  }
 }
