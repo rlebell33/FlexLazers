@@ -12,7 +12,7 @@ const {app, BrowserWindow} = require('electron')
           nodeIntegration: true
         }
       })
-      console.log(url)
+      
       mainWindow.loadURL(
         url.format({
           
