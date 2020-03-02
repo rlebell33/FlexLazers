@@ -30,6 +30,9 @@ export class AppComponent {
     this.captureEvents(canvasEl);
   }
   
+  screenCap(){
+    console.log('hello!')
+  }
   private captureEvents(canvasEl: HTMLCanvasElement) {
     // this will capture all mousedown events from the canvas element
     fromEvent(canvasEl, 'mousedown')
