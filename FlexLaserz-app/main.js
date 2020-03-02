@@ -1,11 +1,13 @@
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, screen} = require('electron')
     const url = require("url");
     const path = require("path");
 
     function createWindow () {
+      const { width, height } = screen.getPrimaryDisplay().workAreaSize
       const mainWindow = new BrowserWindow({
-        width: 500,
-        height: 500,
+        width: width,
+        height: height,
+        alwaysOnTop: true,
         frame:false,
         transparent: true,
         webPreferences: {
@@ -15,7 +17,6 @@ const {app, BrowserWindow} = require('electron')
       
       mainWindow.loadURL(
         url.format({
-          
           pathname: path.join(__dirname, `/dist/FlexLaserz-app/index.html`),
           protocol: "file:",
           slashes: true
