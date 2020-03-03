@@ -1,6 +1,8 @@
-const {app, BrowserWindow, screen} = require('electron')
+const {app, BrowserWindow, screen, ipcMain} = require('electron')
     const url = require("url");
     const path = require("path");
+
+    let mainWindow
 
     function createWindow () {
       const { width, height } = screen.getPrimaryDisplay().workAreaSize
@@ -29,6 +31,24 @@ const {app, BrowserWindow, screen} = require('electron')
         mainWindow = null
       })
     }
+
+    function openModal(){
+      const { BrowserWindow } = require('electron');
+      let modal = new BrowserWindow({ 
+        parent: mainWindow, 
+        modal: true, 
+        show: false,
+        alwaysOnTop: true, 
+      })
+      modal.loadURL('https://www.sitepoint.com')
+      modal.once('ready-to-show', () => {
+        modal.show()
+      })
+    }
+
+    ipcMain.on('openModal', (event, arg) => {
+      openModal()
+    })
 
     app.on('ready', createWindow)
 

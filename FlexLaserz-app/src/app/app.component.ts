@@ -1,6 +1,7 @@
 import { Component,Input, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { switchMap, takeUntil, pairwise } from 'rxjs/operators'
+import { IpcRenderer } from 'electron';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ export class AppComponent {
   @Input() public height = 957;
 
   private cx: CanvasRenderingContext2D;
+  private ipc: IpcRenderer;
 
   public ngAfterViewInit() {
     const canvasEl: HTMLCanvasElement = this.canvas.nativeElement;
@@ -29,9 +31,22 @@ export class AppComponent {
 
     this.captureEvents(canvasEl);
   }
+
+  constructor(){
+    if ((<any>window).require) {
+      try {
+        this.ipc = (<any>window).require('electron').ipcRenderer;
+      } catch (e) {
+        throw e;
+      }
+    } else {
+      console.warn('App not running inside Electron!');
+    }
+  }
   
   screenCap(){
     console.log('hello!')
+    this.ipc.send("openModal");
   }
   private captureEvents(canvasEl: HTMLCanvasElement) {
     // this will capture all mousedown events from the canvas element
