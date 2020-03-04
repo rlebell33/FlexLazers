@@ -2,6 +2,7 @@ import { Component,Input, ElementRef, AfterViewInit, ViewChild } from '@angular/
 import { fromEvent } from 'rxjs';
 import { switchMap, takeUntil, pairwise } from 'rxjs/operators'
 import { IpcRenderer } from 'electron';
+import { Notifier } from 'node-notifier';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,8 @@ export class AppComponent {
 
   private cx: CanvasRenderingContext2D;
   private ipc: IpcRenderer;
-
+  private notity: Notifier;
+  
   public ngAfterViewInit() {
     const canvasEl: HTMLCanvasElement = this.canvas.nativeElement;
     this.cx = canvasEl.getContext('2d');
@@ -45,9 +47,9 @@ export class AppComponent {
   }
   
   screenCap(){
-    console.log('hello!')
-    this.ipc.send("openModal");
+    this.ipc.send("screenCap");
   }
+
   private captureEvents(canvasEl: HTMLCanvasElement) {
     // this will capture all mousedown events from the canvas element
     fromEvent(canvasEl, 'mousedown')
