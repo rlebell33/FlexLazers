@@ -32,6 +32,7 @@ function createWindow () {
     mainWindow = null
   })
 }
+
 function notificaiton(Title, Message, Icon){
     notifier.notify({
       title: "thing",
