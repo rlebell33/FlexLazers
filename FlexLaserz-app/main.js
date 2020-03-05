@@ -55,7 +55,7 @@ function screenCap(){
     notificaiton(fileName,'Image successfully saved! ',path.join(path.join(__dirname,'/screenshots'),fileName))},1000)
 }
 
-ipcMain.on('screenCap', (event, arg) => {
+ipcMain.on('screenCap', () => {
   screenCap()
 })
 
