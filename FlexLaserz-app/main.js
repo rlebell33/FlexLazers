@@ -35,12 +35,12 @@ function createWindow () {
 
 function notificaiton(Title, Message, Icon){
     notifier.notify({
-      title: "thing",
+      title: Title,
       subtitle: undefined,
-      message: 'Hello',
+      message: Message,
       icon: Icon,
       appID: undefined,
-      sound: true
+      sound: false
     })
 }
 
@@ -52,9 +52,7 @@ function screenCap(){
     fileName += data.toString();
   })
   setTimeout(() =>{
-    notificaiton('title','message',path.join(path.join(__dirname,'/screenshots'),fileName))
-  },1000)
-
+    notificaiton(fileName,'Image successfully saved! ',path.join(path.join(__dirname,'/screenshots'),fileName))},1000)
 }
 
 ipcMain.on('screenCap', (event, arg) => {
