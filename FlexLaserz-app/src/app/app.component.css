@@ -1,10 +1,9 @@
 #footer {
     text-align: center;
     width: 440px;
-    margin-top: -1em;
+    margin-top: -4em;
     margin-left: 47em;
     opacity: .5;
-    text-align: center;
 }
 
 #footer:hover {
@@ -22,9 +21,16 @@
     opacity: 1;
 }
 
-#container { position: relative; }
+#container { 
+    position: relative; 
+    height: 65em;
+}
 
-canvas { border: none; }
+canvas { 
+    border: none;
+    width: 100%; 
+    height: 100%;
+}
 
 button { 
     border: none;
