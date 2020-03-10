@@ -13,9 +13,6 @@ export class AppComponent {
   title = 'FlexLaserz-app';
   @ViewChild('canvas') public canvas: ElementRef;
 
-  @Input() public width =1900;
-  @Input() public height = 957;
-
   private cx: CanvasRenderingContext2D;
   private ipc: IpcRenderer;
   private notity: Notifier;
@@ -23,9 +20,9 @@ export class AppComponent {
   public ngAfterViewInit() {
     const canvasEl: HTMLCanvasElement = this.canvas.nativeElement;
     this.cx = canvasEl.getContext('2d');
-
-    canvasEl.width = this.width;
-    canvasEl.height = this.height;
+    
+    canvasEl.width = window.innerWidth;
+    canvasEl.height = window.innerHeight;
 
     this.cx.lineWidth = 3;
     this.cx.lineCap = 'round';

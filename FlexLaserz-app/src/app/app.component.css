@@ -23,7 +23,7 @@
 
 #container { 
     position: relative; 
-    height: 65em;
+    height: 100%;
 }
 
 canvas { 

@@ -36,15 +36,13 @@ function createWindow () {
 function notificaiton(Title, Message, Icon){
     notifier.notify({
       title: Title,
-      subtitle: undefined,
       message: Message,
       icon: Icon,
-      appID: undefined,
       sound: false
     })
 }
 
-function screenCap(){
+ipcMain.on('screenCap', () => {
   var spawn = require('child_process').spawn,
   py = spawn('python', ['screenshot.py'])
   fileName = ''
@@ -53,10 +51,6 @@ function screenCap(){
   })
   setTimeout(() =>{
     notificaiton(fileName,'Image successfully saved! ',path.join(path.join(__dirname,'/screenshots'),fileName))},1000)
-}
-
-ipcMain.on('screenCap', () => {
-  screenCap()
 })
 
 app.on('ready', createWindow)
