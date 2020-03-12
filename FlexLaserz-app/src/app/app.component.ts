@@ -1,8 +1,8 @@
 import { Component,Input, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms'
 import { fromEvent } from 'rxjs';
 import { switchMap, takeUntil, pairwise } from 'rxjs/operators'
 import { IpcRenderer } from 'electron';
-import { Notifier } from 'node-notifier';
 
 @Component({
   selector: 'app-root',
@@ -15,12 +15,32 @@ export class AppComponent {
 
   private cx: CanvasRenderingContext2D;
   private ipc: IpcRenderer;
-  private notity: Notifier;
-  
+
+  writingToolForm: FormGroup;
+
+  writingTools = [{
+    name: 'Pen',
+    lineWidth: 3,
+    lineCap: 'round',
+    strokeStyle: '#000'
+  },
+  {
+    name: 'Highlighter',
+    lineWidth: 30,
+    lineCap: 'round',
+    strokeStyle: 'rgba(240,255,0,.05)'
+  }]
+
+  ngOnInit(){
+    this.writingToolForm = this.fb.group({
+      writingToolControl: [this.writingTools[0]]
+    })
+
+  }
+
   public ngAfterViewInit() {
     const canvasEl: HTMLCanvasElement = this.canvas.nativeElement;
     this.cx = canvasEl.getContext('2d');
-    
     canvasEl.width = window.innerWidth;
     canvasEl.height = window.innerHeight;
 
@@ -31,7 +51,7 @@ export class AppComponent {
     this.captureEvents(canvasEl);
   }
 
-  constructor(){
+  constructor(private fb: FormBuilder){
     if ((<any>window).require) {
       try {
         this.ipc = (<any>window).require('electron').ipcRenderer;

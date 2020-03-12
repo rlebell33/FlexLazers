@@ -1,4 +1,11 @@
 <div id="container">
+  <form [formGroup]='writingToolForm'>
+    <select formControlName='writingToolControl'>
+      <option [value]='tool' *ngFor='let tool of writingTools'>
+        {{tool.name}}
+      </option>
+    </select>
+  </form>
   <canvas #canvas></canvas>
   <div id='footer' >
     <button>
