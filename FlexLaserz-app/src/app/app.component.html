@@ -1,11 +1,10 @@
 <div id="container">
-  <form [formGroup]='writingToolForm'>
-    <select formControlName='writingToolControl'>
-      <option [value]='tool' *ngFor='let tool of writingTools'>
-        {{tool.name}}
-      </option>
-    </select>
-  </form>
+  <div class="dropdown">
+    <button class="dropbtn" >Tools</button>
+    <div class="dropdown-content">
+      <a *ngFor='let tool of tools' (hesitate)='selectedTool(tool)' [duration]='1500'>{{tool.name}}</a>
+    </div>
+  </div>
   <canvas #canvas></canvas>
   <div id='footer' >
     <button>

@@ -18,25 +18,18 @@ export class AppComponent {
 
   writingToolForm: FormGroup;
 
-  writingTools = [{
-    name: 'Pen',
-    lineWidth: 3,
-    lineCap: 'round',
-    strokeStyle: '#000'
-  },
-  {
-    name: 'Highlighter',
-    lineWidth: 30,
-    lineCap: 'round',
-    strokeStyle: 'rgba(240,255,0,.05)'
+  tools =[{
+    "name": "Pen",
+    "lineWidth": 3,
+    "lineCap": "round",
+    "strokeStyle": "#000"
+  },{
+    "name": "Highlighter",
+    "lineWidth": 30,
+    "lineCap": "round",
+    "strokeStyle": "rgba(80,100,0,0.05)"
   }]
 
-  ngOnInit(){
-    this.writingToolForm = this.fb.group({
-      writingToolControl: [this.writingTools[0]]
-    })
-
-  }
 
   public ngAfterViewInit() {
     const canvasEl: HTMLCanvasElement = this.canvas.nativeElement;
@@ -61,6 +54,13 @@ export class AppComponent {
     } else {
       console.warn('App not running inside Electron!');
     }
+  }
+
+  selectedTool(tool){
+    console.log(name)
+    this.cx.lineWidth = tool.lineWidth
+    this.cx.lineCap = tool.lineCap
+    this.cx.strokeStyle = tool.strokeStyle
   }
   
   screenCap(){
