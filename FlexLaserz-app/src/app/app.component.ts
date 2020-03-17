@@ -1,5 +1,4 @@
 import { Component,Input, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms'
 import { fromEvent } from 'rxjs';
 import { switchMap, takeUntil, pairwise } from 'rxjs/operators'
 import { IpcRenderer } from 'electron';
@@ -16,8 +15,6 @@ export class AppComponent {
   private cx: CanvasRenderingContext2D;
   private ipc: IpcRenderer;
 
-  writingToolForm: FormGroup;
-
   tools =[{
     "name": "Pen",
     "lineWidth": 3,
@@ -27,7 +24,7 @@ export class AppComponent {
     "name": "Highlighter",
     "lineWidth": 30,
     "lineCap": "round",
-    "strokeStyle": "rgba(80,100,0,0.05)"
+    "strokeStyle": "rgba(255,255,0,0.05)"
   }]
 
 
@@ -44,7 +41,7 @@ export class AppComponent {
     this.captureEvents(canvasEl);
   }
 
-  constructor(private fb: FormBuilder){
+  constructor(){
     if ((<any>window).require) {
       try {
         this.ipc = (<any>window).require('electron').ipcRenderer;
@@ -57,7 +54,6 @@ export class AppComponent {
   }
 
   selectedTool(tool){
-    console.log(name)
     this.cx.lineWidth = tool.lineWidth
     this.cx.lineCap = tool.lineCap
     this.cx.strokeStyle = tool.strokeStyle
@@ -88,7 +84,6 @@ export class AppComponent {
       )
       .subscribe((res: [MouseEvent, MouseEvent]) => {
         const rect = canvasEl.getBoundingClientRect();
-  
         // previous and current position with the offset
         const prevPos = {
           x: res[0].clientX - rect.left,
