@@ -1,6 +1,8 @@
 import { Component,Input, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { switchMap, takeUntil, pairwise } from 'rxjs/operators'
+import { IpcRenderer } from 'electron';
+import { Notifier } from 'node-notifier';
 
 @Component({
   selector: 'app-root',
@@ -11,17 +13,16 @@ export class AppComponent {
   title = 'FlexLaserz-app';
   @ViewChild('canvas') public canvas: ElementRef;
 
-  @Input() public width =1900;
-  @Input() public height = 957;
-
   private cx: CanvasRenderingContext2D;
-
+  private ipc: IpcRenderer;
+  private notity: Notifier;
+  
   public ngAfterViewInit() {
     const canvasEl: HTMLCanvasElement = this.canvas.nativeElement;
     this.cx = canvasEl.getContext('2d');
-
-    canvasEl.width = this.width;
-    canvasEl.height = this.height;
+    
+    canvasEl.width = window.innerWidth;
+    canvasEl.height = window.innerHeight;
 
     this.cx.lineWidth = 3;
     this.cx.lineCap = 'round';
@@ -29,7 +30,23 @@ export class AppComponent {
 
     this.captureEvents(canvasEl);
   }
+
+  constructor(){
+    if ((<any>window).require) {
+      try {
+        this.ipc = (<any>window).require('electron').ipcRenderer;
+      } catch (e) {
+        throw e;
+      }
+    } else {
+      console.warn('App not running inside Electron!');
+    }
+  }
   
+  screenCap(){
+    this.ipc.send("screenCap");
+  }
+
   private captureEvents(canvasEl: HTMLCanvasElement) {
     // this will capture all mousedown events from the canvas element
     fromEvent(canvasEl, 'mousedown')

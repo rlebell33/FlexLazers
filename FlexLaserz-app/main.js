@@ -1,40 +1,64 @@
-const {app, BrowserWindow, desktopCapturer} = require('electron')
-    const url = require("url");
-    const path = require("path");
+const {app, BrowserWindow, screen, ipcMain} = require('electron')
+const url = require("url");
+const path = require("path");
+const notifier = require('node-notifier');
 
-    function createWindow () {
-      const mainWindow = new BrowserWindow({
-        width: 500,
-        height: 500,
-        fullscreen: true,
-        // frame:false,
-        transparent: true,
-        webPreferences: {
-          nodeIntegration: true
-        }
-      })
+let mainWindow
 
-      mainWindow.loadURL(
-        url.format({
-          pathname: path.join(__dirname, `/dist/FlexLaserz-app/index.html`),
-          protocol: "file:",
-          slashes: true
-        })
-      );
-      // Open the DevTools.
-      mainWindow.webContents.openDevTools()
-
-      mainWindow.on('closed', function () {
-        mainWindow = null
-      })
+function createWindow () {
+  const { width, height } = screen.getPrimaryDisplay().workAreaSize
+  const mainWindow = new BrowserWindow({
+    width: width,
+    height: height,
+    alwaysOnTop: true,
+    frame:false,
+    transparent: true,
+    webPreferences: {
+      nodeIntegration: true
     }
-
-    app.on('ready', createWindow)
-
-    app.on('window-all-closed', function () {
-      if (process.platform !== 'darwin') app.quit()
+  })
+  
+  mainWindow.loadURL(
+    url.format({
+      pathname: path.join(__dirname, `/dist/FlexLaserz-app/index.html`),
+      protocol: "file:",
+      slashes: true
     })
+  );
+  // Open the DevTools.
+  //mainWindow.webContents.openDevTools()
 
-    app.on('activate', function () {
-      if (mainWindow === null) createWindow()
+  mainWindow.on('closed', function () {
+    mainWindow = null
+  })
+}
+
+function notificaiton(Title, Message, Icon){
+    notifier.notify({
+      title: Title,
+      message: Message,
+      icon: Icon,
+      sound: false
     })
+}
+
+ipcMain.on('screenCap', () => {
+  var spawn = require('child_process').spawn,
+  py = spawn('python', ['screenshot.py'])
+  fileName = ''
+  py.stdout.on('data',function(data){
+    fileName += data.toString();
+  })
+  setTimeout(() =>{
+    notificaiton(fileName,'Image successfully saved! ',path.join(path.join(__dirname,'/screenshots'),fileName))},1000)
+})
+
+app.on('ready', createWindow)
+
+app.on('window-all-closed', function () {
+  if (process.platform !== 'darwin') app.quit()
+})
+
+app.on('activate', function () {
+  if (mainWindow === null) createWindow()
+})

@@ -1,7 +1,5 @@
 <div id="container">
-
   <canvas #canvas></canvas>
-
   <div id='footer' >
     <button>
       <img class='icon' src="../assets/images/pencil.png" alt="Pencil" width="42" height="42">
@@ -9,7 +7,7 @@
     <button>
       <img class='icon' src="../assets/images/screen.png" alt="Screen" width="42" height="42">
     </button>
-    <button>
+    <button (hesitate)='screenCap()' [duration] = "2000">
       <img class='icon' src="../assets/images/camera.png" alt="Camera" width="42" height="42">
     </button>
     <button>
