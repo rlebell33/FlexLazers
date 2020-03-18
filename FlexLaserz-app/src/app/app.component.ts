@@ -15,6 +15,8 @@ export class AppComponent {
   private cx: CanvasRenderingContext2D;
   private ipc: IpcRenderer;
 
+  toolModalShow = true;
+
   tools =[{
     "name": "Pen",
     "lineWidth": 3,
@@ -57,6 +59,7 @@ export class AppComponent {
     this.cx.lineWidth = tool.lineWidth
     this.cx.lineCap = tool.lineCap
     this.cx.strokeStyle = tool.strokeStyle
+    this.ipc.send('toolModal',tool.name)
   }
   
   screenCap(){

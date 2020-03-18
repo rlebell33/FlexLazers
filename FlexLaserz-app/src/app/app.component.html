@@ -1,13 +1,7 @@
 <div id="container">
-  <div class="dropdown">
-    <button class="dropbtn" >Tools</button>
-    <div class="dropdown-content">
-      <a *ngFor='let tool of tools' (hesitate)='selectedTool(tool)' [duration]='1500'>{{tool.name}}</a>
-    </div>
-  </div>
   <canvas #canvas></canvas>
   <div id='footer' >
-    <button>
+    <button (hesitate)='toolModalShow=false' [duration] = "2000">
       <img class='icon' src="../assets/images/pencil.png" alt="Pencil" width="42" height="42">
     </button>
     <button>
@@ -25,5 +19,16 @@
     <button>
       <img class='icon' src="../assets/images/exit.png" alt="Exit" width="42" height="42">
     </button>
+  </div>
+</div>
+<!-- Writing Tool Modal -->
+<div class='toolModal' [hidden]='toolModalShow'>
+  <div>
+    <button (hesitate)='toolModalShow=true' [duration] = "2000">X</button>
+  </div>
+  <div class="dropdown">
+  <button class="dropbtn" >Writing tools Tools</button>
+  <div class="dropdown-content">
+     <a *ngFor='let tool of tools' (hesitate)='selectedTool(tool)' [duration]='1500'>{{tool.name}}</a>
   </div>
 </div>

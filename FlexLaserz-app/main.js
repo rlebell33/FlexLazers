@@ -26,7 +26,7 @@ function createWindow () {
     })
   );
   // Open the DevTools.
-  mainWindow.webContents.openDevTools()
+  //mainWindow.webContents.openDevTools()
 
   mainWindow.on('closed', function () {
     mainWindow = null
@@ -51,6 +51,10 @@ ipcMain.on('screenCap', () => {
   })
   setTimeout(() =>{
     notificaiton(fileName,'Image successfully saved! ',path.join(path.join(__dirname,'/screenshots'),fileName))},1000)
+})
+
+ipcMain.on('toolModal',(event,toolName) =>{
+  notificaiton("Tool Selected",toolName+' Selected!',null)
 })
 
 app.on('ready', createWindow)
