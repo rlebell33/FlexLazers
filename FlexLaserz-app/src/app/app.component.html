@@ -27,7 +27,7 @@
     <button (hesitate)='toolModalShow=true' [duration] = "2000">X</button>
   </div>
   <div class="dropdown">
-  <button class="dropbtn" >Writing tools Tools</button>
+  <button class="dropbtn" >Writing Tools</button>
   <div class="dropdown-content">
      <a *ngFor='let tool of tools' (hesitate)='selectedTool(tool)' [duration]='1500'>{{tool.name}}</a>
   </div>
