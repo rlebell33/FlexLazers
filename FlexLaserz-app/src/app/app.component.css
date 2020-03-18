@@ -83,8 +83,9 @@ button:hover{
   .toolModal{
       position: fixed;
       top: 16em;
-      right: 50em;
+      right: 48em;
       background-color: #FFF;
-      width: 20em;
-      height: 15em;
+      width: 24em;
+      height: 20em;
+      box-shadow: 0 4px 4px 0 rgba(0,0,0,.2);
   }
