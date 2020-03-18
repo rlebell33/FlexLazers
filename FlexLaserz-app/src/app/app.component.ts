@@ -29,6 +29,32 @@ export class AppComponent {
     "strokeStyle": "rgba(255,255,0,0.05)"
   }]
 
+  colors = [{
+    "name": "Red",
+    "strokeStyle": "#FF0000"
+  },{
+    "name": "Orange",
+    "strokeStyle": "#FFA500"
+  },{
+    "name": "Yellow",
+    "strokeStyle": "#FFFF00"
+  },{
+    "name": "Green",
+    "strokeStyle": "#008000"
+  },{
+    "name": "Blue",
+    "strokeStyle": "#0000FF"
+  },{
+    "name": "Purple",
+    "strokeStyle": "#800080"
+  },{
+    "name": "Black",
+    "strokeStyle": "#000000"
+  },{
+    "name": "White",
+    "strokeStyle": "#FFFFFF"
+  }]
+
 
   public ngAfterViewInit() {
     const canvasEl: HTMLCanvasElement = this.canvas.nativeElement;
@@ -60,6 +86,11 @@ export class AppComponent {
     this.cx.lineCap = tool.lineCap
     this.cx.strokeStyle = tool.strokeStyle
     this.ipc.send('toolModal',tool.name)
+  }
+
+  selectedColor(color){
+    this.cx.strokeStyle = color.strokeStyle
+    this.ipc.send('toolModal',color.name)
   }
   
   screenCap(){
