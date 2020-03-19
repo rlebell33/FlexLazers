@@ -17,6 +17,7 @@ export class AppComponent {
 
   toolModalShow = true;
   exitModalShow = true;
+  writingTool; 
   
   tools =[{
     "name": "Pen",
@@ -32,28 +33,28 @@ export class AppComponent {
 
   colors = [{
     "name": "Red",
-    "strokeStyle": "rgba(255,0,0,1)"
+    "strokeStyle": "#ff0000",
   },{
     "name": "Orange",
-    "strokeStyle": "rgba(255,165,0,1)"
+    "strokeStyle": "#ffa500"
   },{
     "name": "Yellow",
-    "strokeStyle": "rgba(255,255,0,1)"
+    "strokeStyle": "#ffff00"
   },{
     "name": "Green",
-    "strokeStyle": "rgba(0,128,0,1)"
+    "strokeStyle": "#008000"
   },{
     "name": "Blue",
-    "strokeStyle": "rgba(0,0,255,1)"
+    "strokeStyle": "#0000ff"
   },{
     "name": "Purple",
-    "strokeStyle": "rgba(128,0,128,1)"
+    "strokeStyle": "#800080"
   },{
     "name": "Black",
-    "strokeStyle": "rgba(0,0,0,1)"
+    "strokeStyle": "#000000"
   },{
     "name": "White",
-    "strokeStyle": "rgba(255,255,255,1)"
+    "strokeStyle": "#ffffff"
   }]
 
 
@@ -63,6 +64,7 @@ export class AppComponent {
     canvasEl.width = window.innerWidth;
     canvasEl.height = window.innerHeight;
 
+    this.writingTool='Pen'
     this.cx.lineWidth = 3;
     this.cx.lineCap = 'round';
     this.cx.strokeStyle = '#000';
@@ -83,6 +85,7 @@ export class AppComponent {
   }
 
   selectedTool(tool){
+    this.writingTool = tool.name
     this.cx.lineWidth = tool.lineWidth
     this.cx.lineCap = tool.lineCap
     this.cx.strokeStyle = tool.strokeStyle
@@ -90,7 +93,12 @@ export class AppComponent {
   }
 
   selectedColor(color){
-    this.cx.strokeStyle = color.strokeStyle
+    if(this.writingTool=='Pen'){
+      this.cx.strokeStyle = color.strokeStyle
+    }
+    else if (this.writingTool == 'Highlighter'){
+      this.cx.strokeStyle = color.strokeStyle.concat('30')
+    }
     this.ipc.send('toolModal',color.name)
   }
   
