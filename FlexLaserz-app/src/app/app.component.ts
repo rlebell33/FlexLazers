@@ -16,7 +16,8 @@ export class AppComponent {
   private ipc: IpcRenderer;
 
   toolModalShow = true;
-
+  exitModalShow = true;
+  
   tools =[{
     "name": "Pen",
     "lineWidth": 3,
@@ -31,28 +32,28 @@ export class AppComponent {
 
   colors = [{
     "name": "Red",
-    "strokeStyle": "#FF0000"
+    "strokeStyle": "rgba(255,0,0,1)"
   },{
     "name": "Orange",
-    "strokeStyle": "#FFA500"
+    "strokeStyle": "rgba(255,165,0,1)"
   },{
     "name": "Yellow",
-    "strokeStyle": "#FFFF00"
+    "strokeStyle": "rgba(255,255,0,1)"
   },{
     "name": "Green",
-    "strokeStyle": "#008000"
+    "strokeStyle": "rgba(0,128,0,1)"
   },{
     "name": "Blue",
-    "strokeStyle": "#0000FF"
+    "strokeStyle": "rgba(0,0,255,1)"
   },{
     "name": "Purple",
-    "strokeStyle": "#800080"
+    "strokeStyle": "rgba(128,0,128,1)"
   },{
     "name": "Black",
-    "strokeStyle": "#000000"
+    "strokeStyle": "rgba(0,0,0,1)"
   },{
     "name": "White",
-    "strokeStyle": "#FFFFFF"
+    "strokeStyle": "rgba(255,255,255,1)"
   }]
 
 

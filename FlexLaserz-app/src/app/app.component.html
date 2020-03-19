@@ -16,7 +16,7 @@
     <button>
       <img class='icon' src="../assets/images/cog.png" alt="Cog" width="42" height="42">
     </button>
-    <button>
+    <button (hesitate)='exitModalShow=false' [duration] = "2000">
       <img class='icon' src="../assets/images/exit.png" alt="Exit" width="42" height="42">
     </button>
   </div>
@@ -42,4 +42,18 @@
       <div class="dropdown-content">
         <a *ngFor='let color of colors' (hesitate)='selectedColor(color)' [duration]='1500'>{{color.name}}</a> 
       </div>-->
+</div>
+<!-- Exit Button Modal -->
+<div class='exitModal' [hidden]='exitModalShow'>
+  <div>
+    <button (hesitate)='exitModalShow=true' [duration] = "2000">X</button>
+  </div>
+  <div class="container">
+    <h1>Exit Program</h1>
+    <p>Are you sure you want to exit the program?</p>
+    <div class="clearfix">
+      <button type="button" class="cancelbtn">Cancel</button>
+      <button type="button" class="deletebtn">Exit</button>
+    </div>
+  </div>
 </div>

@@ -110,3 +110,13 @@ button:hover{
     margin-left: 4.5em;
     font-size: 2em;
   }
+
+.exitModal{
+ position: fixed;
+ top: 16em;
+ right: 48em;
+ background-color: #FFF;
+ width: 20em;
+ height: 10em;
+ box-shadow: 0 4px 4px 0 rgba(0,0,0,.2);
+}
