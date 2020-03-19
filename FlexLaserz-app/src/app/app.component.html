@@ -2,22 +2,22 @@
   <canvas #canvas></canvas>
   <div id='footer' >
     <button (hesitate)='toolModalShow=false' [duration] = "2000">
-      <img class='icon' src="../assets/images/pencil.png" alt="Pencil" width="42" height="42">
+      <img class='icon' src="assets/images/pencil.png" alt="Pencil" width="42" height="42">
     </button>
     <button>
-      <img class='icon' src="../assets/images/screen.png" alt="Screen" width="42" height="42">
+      <img class='icon' src="assets/images/screen.png" alt="Screen" width="42" height="42">
     </button>
     <button (hesitate)='screenCap()' [duration] = "2000">
-      <img class='icon' src="../assets/images/camera.png" alt="Camera" width="42" height="42">
+      <img class='icon' src="assets/images/camera.png" alt="Camera" width="42" height="42">
     </button>
     <button>
-      <img class='icon' src="../assets/images/user.png" alt="User" width="42" height="42">
+      <img class='icon' src="assets/images/user.png" alt="User" width="42" height="42">
     </button>
     <button>
-      <img class='icon' src="../assets/images/cog.png" alt="Cog" width="42" height="42">
+      <img class='icon' src="assets/images/cog.png" alt="Cog" width="42" height="42">
     </button>
     <button (hesitate)='exitModalShow=false' [duration] = "2000">
-      <img class='icon' src="../assets/images/exit.png" alt="Exit" width="42" height="42">
+      <img class='icon' src="assets/images/exit.png" alt="Exit" width="42" height="42">
     </button>
   </div>
 </div>
@@ -35,7 +35,7 @@
   <div id='colorBox'>
     <label>Colors</label>
     <br>
-    <button id='colorBlock'*ngFor='let color of colors' (hesitate)='selectedColor(color)' [duration]='1500' [style.background-color]='color.strokeStyle'>{{color.name}}</button>
+    <button id='colorBlock' *ngFor='let color of colors' (hesitate)='selectedColor(color)' [duration]='1500' [style.background-color]='color.strokeStyle'>{{color.name}}</button>
   </div>
        <!-- <div class="dropdown">
       <button class="dropbtn" >Colors</button>
