@@ -80,24 +80,25 @@ button:hover{
   
   .dropdown:hover .dropbtn {background-color: #35a8c1;}
 
-  .toolModal{
-      position: fixed;
-      top: 16em;
-      right: 48em;
-      background-color: #FFF;
-      width: 24em;
-      height: 20em;
-      box-shadow: 0 4px 4px 0 rgba(0,0,0,.2);
+  .modal{
+    position: fixed;
+    top: 16em;
+    right: 48em;
+    background-color: #FFF;
+    width: 24em;
+    height: 20em;
+    box-shadow: 0 4px 4px 0 rgba(0,0,0,.2);
   }
 
   #colorBox{
       margin-top: 1em;
+      padding: .5em;
   }
 
   #colorBlock{
       padding: 5px;
       margin: .5em;
-      width: 8em;
+      width: 10em;
       height: 3em;
       border-style: outset;
   }
@@ -111,12 +112,23 @@ button:hover{
     font-size: 2em;
   }
 
-.exitModal{
- position: fixed;
- top: 16em;
- right: 48em;
- background-color: #FFF;
- width: 20em;
- height: 10em;
- box-shadow: 0 4px 4px 0 rgba(0,0,0,.2);
+
+@media only screen and (max-width: 2880px) {
+    #footer {
+        text-align: center;
+        width: 440px;
+        margin-top: -4em;
+        margin-left: 40em;
+        opacity: .5;
+    }
+
+    .modal{
+        position: fixed;
+        top: 16em;
+        right: 40em;
+        background-color: #FFF;
+        width: 24em;
+        height: 20em;
+        box-shadow: 0 4px 4px 0 rgba(0,0,0,.2);
+    }
 }
