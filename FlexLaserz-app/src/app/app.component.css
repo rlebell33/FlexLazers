@@ -89,3 +89,24 @@ button:hover{
       height: 20em;
       box-shadow: 0 4px 4px 0 rgba(0,0,0,.2);
   }
+
+  #colorBox{
+      margin-top: 1em;
+  }
+
+  #colorBlock{
+      padding: 5px;
+      margin: .5em;
+      width: 8em;
+      height: 3em;
+      border-style: outset;
+  }
+  
+  #colorBlock:hover{
+      border-style: inset;
+  }
+
+  label{
+    margin-left: 4.5em;
+    font-size: 2em;
+  }

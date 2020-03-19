@@ -27,12 +27,19 @@
     <button (hesitate)='toolModalShow=true' [duration] = "2000">X</button>
   </div>
   <div class="dropdown">
-  <button class="dropbtn" >Writing Tools</button>
-  <div class="dropdown-content">
-     <a *ngFor='let tool of tools' (hesitate)='selectedTool(tool)' [duration]='1500'>{{tool.name}}</a>
-     <div class="dropdown">
+    <button class="dropbtn" >Writing Tools</button>
+    <div class="dropdown-content">
+      <a *ngFor='let tool of tools' (hesitate)='selectedTool(tool)' [duration]='1500'>{{tool.name}}</a>
+    </div>
+  </div>
+  <div id='colorBox'>
+    <label>Colors</label>
+    <br>
+    <button id='colorBlock'*ngFor='let color of colors' (hesitate)='selectedColor(color)' [duration]='1500' [style.background-color]='color.strokeStyle'>{{color.name}}</button>
+  </div>
+       <!-- <div class="dropdown">
       <button class="dropbtn" >Colors</button>
       <div class="dropdown-content">
-        <a *ngFor='let color of colors' (hesitate)='selectedColor(color)' [duration]='1500'>{{color.name}}</a>
-  </div>
+        <a *ngFor='let color of colors' (hesitate)='selectedColor(color)' [duration]='1500'>{{color.name}}</a> 
+      </div>-->
 </div>
