@@ -105,6 +105,9 @@ export class AppComponent {
   screenCap(){
     this.ipc.send("screenCap");
   }
+  exit(){
+    this.ipc.send('exit');
+  }
 
   private captureEvents(canvasEl: HTMLCanvasElement) {
     // this will capture all mousedown events from the canvas element
