@@ -2,7 +2,6 @@ import { Component,Input, ElementRef, AfterViewInit, ViewChild } from '@angular/
 import { fromEvent } from 'rxjs';
 import { switchMap, takeUntil, pairwise } from 'rxjs/operators'
 import { IpcRenderer } from 'electron';
-import { Notifier } from 'node-notifier';
 
 @Component({
   selector: 'app-root',
@@ -15,15 +14,57 @@ export class AppComponent {
 
   private cx: CanvasRenderingContext2D;
   private ipc: IpcRenderer;
-  private notity: Notifier;
+
+  toolModalShow = true;
+  exitModalShow = true;
+  writingTool; 
   
+  tools =[{
+    "name": "Pen",
+    "lineWidth": 3,
+    "lineCap": "round",
+    "strokeStyle": "#000"
+  },{
+    "name": "Highlighter",
+    "lineWidth": 30,
+    "lineCap": "round",
+    "strokeStyle": "rgba(255,255,0,0.05)"
+  }]
+
+  colors = [{
+    "name": "Red",
+    "strokeStyle": "#ff0000",
+  },{
+    "name": "Orange",
+    "strokeStyle": "#ffa500"
+  },{
+    "name": "Yellow",
+    "strokeStyle": "#ffff00"
+  },{
+    "name": "Green",
+    "strokeStyle": "#008000"
+  },{
+    "name": "Blue",
+    "strokeStyle": "#0000ff"
+  },{
+    "name": "Purple",
+    "strokeStyle": "#800080"
+  },{
+    "name": "Black",
+    "strokeStyle": "#000000"
+  },{
+    "name": "White",
+    "strokeStyle": "#ffffff"
+  }]
+
+
   public ngAfterViewInit() {
     const canvasEl: HTMLCanvasElement = this.canvas.nativeElement;
     this.cx = canvasEl.getContext('2d');
-    
     canvasEl.width = window.innerWidth;
     canvasEl.height = window.innerHeight;
 
+    this.writingTool='Pen'
     this.cx.lineWidth = 3;
     this.cx.lineCap = 'round';
     this.cx.strokeStyle = '#000';
@@ -42,9 +83,30 @@ export class AppComponent {
       console.warn('App not running inside Electron!');
     }
   }
+
+  selectedTool(tool){
+    this.writingTool = tool.name
+    this.cx.lineWidth = tool.lineWidth
+    this.cx.lineCap = tool.lineCap
+    this.cx.strokeStyle = tool.strokeStyle
+    this.ipc.send('toolModal',tool.name)
+  }
+
+  selectedColor(color){
+    if(this.writingTool=='Pen'){
+      this.cx.strokeStyle = color.strokeStyle
+    }
+    else if (this.writingTool == 'Highlighter'){
+      this.cx.strokeStyle = color.strokeStyle.concat('30')
+    }
+    this.ipc.send('toolModal',color.name)
+  }
   
   screenCap(){
     this.ipc.send("screenCap");
+  }
+  exit(){
+    this.ipc.send('exit');
   }
 
   private captureEvents(canvasEl: HTMLCanvasElement) {
@@ -68,7 +130,6 @@ export class AppComponent {
       )
       .subscribe((res: [MouseEvent, MouseEvent]) => {
         const rect = canvasEl.getBoundingClientRect();
-  
         // previous and current position with the offset
         const prevPos = {
           x: res[0].clientX - rect.left,

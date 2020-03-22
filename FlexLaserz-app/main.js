@@ -53,6 +53,14 @@ ipcMain.on('screenCap', () => {
     notificaiton(fileName,'Image successfully saved! ',path.join(path.join(__dirname,'/screenshots'),fileName))},1000)
 })
 
+ipcMain.on('exit',() =>{
+  app.quit()
+})
+
+ipcMain.on('toolModal',(event,toolName) =>{
+  notificaiton("Tool Selected",toolName+' Selected!',null)
+})
+
 app.on('ready', createWindow)
 
 app.on('window-all-closed', function () {

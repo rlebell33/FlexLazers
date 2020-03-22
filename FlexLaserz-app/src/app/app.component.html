@@ -1,23 +1,59 @@
 <div id="container">
   <canvas #canvas></canvas>
   <div id='footer' >
-    <button>
-      <img class='icon' src="../assets/images/pencil.png" alt="Pencil" width="42" height="42">
+    <button (hesitate)='toolModalShow=false' [duration] = "1500">
+      <img class='icon' src="assets/images/pencil.png" alt="Pencil" width="42" height="42">
     </button>
     <button>
-      <img class='icon' src="../assets/images/screen.png" alt="Screen" width="42" height="42">
+      <img class='icon' src="assets/images/screen.png" alt="Screen" width="42" height="42">
     </button>
-    <button (hesitate)='screenCap()' [duration] = "2000">
-      <img class='icon' src="../assets/images/camera.png" alt="Camera" width="42" height="42">
-    </button>
-    <button>
-      <img class='icon' src="../assets/images/user.png" alt="User" width="42" height="42">
+    <button (hesitate)='screenCap()' [duration] = "1500">
+      <img class='icon' src="assets/images/camera.png" alt="Camera" width="42" height="42">
     </button>
     <button>
-      <img class='icon' src="../assets/images/cog.png" alt="Cog" width="42" height="42">
+      <img class='icon' src="assets/images/user.png" alt="User" width="42" height="42">
     </button>
     <button>
-      <img class='icon' src="../assets/images/exit.png" alt="Exit" width="42" height="42">
+      <img class='icon' src="assets/images/cog.png" alt="Cog" width="42" height="42">
     </button>
+    <button (hesitate)='exitModalShow=false' [duration] = "1500">
+      <img class='icon' src="assets/images/exit.png" alt="Exit" width="42" height="42">
+    </button>
+  </div>
+</div>
+<!-- Writing Tool Modal -->
+<div class='modal' [hidden]='toolModalShow'>
+  <div>
+    <button (hesitate)='toolModalShow=true' [duration] = "1500">X</button>
+  </div>
+  <div class="dropdown">
+    <button class="dropbtn" >Writing Tools</button>
+    <div class="dropdown-content">
+      <a *ngFor='let tool of tools' (hesitate)='selectedTool(tool)' [duration]='1500'>{{tool.name}}</a>
+    </div>
+  </div>
+  <div id='colorBox'>
+    <label>Colors</label>
+    <br>
+    <button id='colorBlock' *ngFor='let color of colors' (hesitate)='selectedColor(color)' [duration]='1500' [style.background-color]='color.strokeStyle'>{{color.name}}</button>
+  </div>
+       <!-- <div class="dropdown">
+      <button class="dropbtn" >Colors</button>
+      <div class="dropdown-content">
+        <a *ngFor='let color of colors' (hesitate)='selectedColor(color)' [duration]='1500'>{{color.name}}</a> 
+      </div>-->
+</div>
+<!-- Exit Button Modal -->
+<div class='modal' [hidden]='exitModalShow'>
+  <div>
+    <button (hesitate)='exitModalShow=true' [duration] = "1500">X</button>
+  </div>
+  <div class="container">
+    <h1>Exit Program</h1>
+    <p>Are you sure you want to exit the program?</p>
+    <div class="clearfix">
+      <button id='colorBlock' type="button" class="cancelbtn" (hesitate)='exit()' [duration] = "1500">Exit</button>
+      <button id='colorBlock' type="button" class="exitbtn" (hesitate)='exitModalShow=true' [duration] = "1500">Cancel</button>
+    </div>
   </div>
 </div>
