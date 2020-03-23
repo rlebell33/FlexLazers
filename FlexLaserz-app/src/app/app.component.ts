@@ -17,8 +17,10 @@ export class AppComponent {
 
   toolModalShow = true;
   exitModalShow = true;
+  windowModalShow = true;
   writingTool; 
-  
+  background='#00000000'
+
   tools =[{
     "name": "Pen",
     "lineWidth": 3,
@@ -57,6 +59,13 @@ export class AppComponent {
     "strokeStyle": "#ffffff"
   }]
 
+  windows =[{
+    "name": "Chalk Board",
+    "background": "#000000ff"
+  },{
+    "name": "Static",
+    "background": '#00000000'
+  }]
 
   public ngAfterViewInit() {
     const canvasEl: HTMLCanvasElement = this.canvas.nativeElement;
@@ -100,6 +109,18 @@ export class AppComponent {
       this.cx.strokeStyle = color.strokeStyle.concat('30')
     }
     this.ipc.send('toolModal',color.name)
+  }
+
+  windowStyle(windowStyle){
+    this.background=windowStyle
+    if (this.cx.strokeStyle = '#000000' || '#00000030') {
+      if (this.writingTool == 'Pen') {
+        this.cx.strokeStyle = this.colors[7].strokeStyle
+      }
+      else {
+        this.cx.strokeStyle = this.colors[7].strokeStyle.concat('30')
+      }
+    }
   }
   
   screenCap(){

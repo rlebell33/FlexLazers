@@ -90,6 +90,10 @@ button:hover{
     box-shadow: 0 4px 4px 0 rgba(0,0,0,.2);
   }
 
+  .windowModal{
+      height: 15em !important; 
+  }
+
   #colorBox{
       margin-top: 1em;
       padding: .5em;
@@ -110,6 +114,14 @@ button:hover{
   label{
     margin-left: 4.5em;
     font-size: 2em;
+  }
+
+  #modalImages{
+      width: 16em;
+  }
+
+  #windowBlock{
+    display: inline;
   }
 
 
