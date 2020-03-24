@@ -130,6 +130,10 @@ export class AppComponent {
     this.ipc.send('exit');
   }
 
+  clearScreen(){
+    this.cx.clearRect(0,0,window.innerWidth,window.innerHeight)
+  }
+
   private captureEvents(canvasEl: HTMLCanvasElement) {
     // this will capture all mousedown events from the canvas element
     fromEvent(canvasEl, 'mousedown')
