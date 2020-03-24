@@ -1,10 +1,10 @@
 <div id="container">
-  <canvas #canvas></canvas>
+  <canvas #canvas [style.background-color]='background'></canvas>
   <div id='footer' >
     <button (hesitate)='toolModalShow=false' [duration] = "1500">
       <img class='icon' src="assets/images/pencil.png" alt="Pencil" width="42" height="42">
     </button>
-    <button>
+    <button (hesitate)='windowModalShow=false' [duration] = "1500">
       <img class='icon' src="assets/images/screen.png" alt="Screen" width="42" height="42">
     </button>
     <button (hesitate)='screenCap()' [duration] = "1500">
@@ -37,11 +37,6 @@
     <br>
     <button id='colorBlock' *ngFor='let color of colors' (hesitate)='selectedColor(color)' [duration]='1500' [style.background-color]='color.strokeStyle'>{{color.name}}</button>
   </div>
-       <!-- <div class="dropdown">
-      <button class="dropbtn" >Colors</button>
-      <div class="dropdown-content">
-        <a *ngFor='let color of colors' (hesitate)='selectedColor(color)' [duration]='1500'>{{color.name}}</a> 
-      </div>-->
 </div>
 <!-- Exit Button Modal -->
 <div class='modal' [hidden]='exitModalShow'>
@@ -55,5 +50,18 @@
       <button id='colorBlock' type="button" class="cancelbtn" (hesitate)='exit()' [duration] = "1500">Exit</button>
       <button id='colorBlock' type="button" class="exitbtn" (hesitate)='exitModalShow=true' [duration] = "1500">Cancel</button>
     </div>
+  </div>
+</div>
+<!-- Window Modal -->
+<div class='modal windowModal' [hidden]='windowModalShow'>
+  <div>
+    <button (hesitate)='windowModalShow=true' [duration] = "1500">X</button>
+  </div>
+  <div id='windowBlock' *ngFor='let style of windows'>
+    <button  (hesitate)='windowStyle(style.background)' [duration]='1500'>
+      <img id='modalImages' src="assets/images/{{style.name}}.png">
+      <br>
+      {{style.name}}
+    </button>
   </div>
 </div>
