@@ -13,7 +13,7 @@
     <button>
       <img class='icon' src="assets/images/user.png" alt="User" width="42" height="42">
     </button>
-    <button>
+    <button (hesitate)='settingsModalShow=false' [duration] = "1500">
       <img class='icon' src="assets/images/cog.png" alt="Cog" width="42" height="42">
     </button>
     <button (hesitate)='exitModalShow=false' [duration] = "1500">
@@ -58,11 +58,30 @@
     <button (hesitate)='windowModalShow=true' [duration] = "1500">X</button>
   </div>
   <div id='windowBlock' *ngFor='let style of windows'>
-    <button  (hesitate)='windowStyle(style.background)' [duration]='1500'>
+    <button (hesitate)='windowStyle(style.background)' [duration]='1500'>
       <img id='modalImages' src="assets/images/{{style.name}}.png">
       <br>
       {{style.name}}
     </button>
   </div>
   <button (hesitate)='clearScreen()' [duration]='1500'>Clear Screen</button>
+</div>
+<!-- Settings Modal -->
+<div class='modal' [hidden]='settingsModalShow'>
+  <div>
+    <button (hesitate)='settingsModalShow=true' [duration] = "1500">X</button>
+  </div>
+  <div *ngFor='let tool of tools' id='windowBlock'>
+    <input type='radio'> {{tool.name}}
+  </div>
+  <div *ngFor='let color of colors' id='windowBlock'>
+    <input type='radio'>{{color.name}}
+  </div>
+  <div id='windowBlock' *ngFor='let style of windows'>
+    <button>
+      <img id='modalImages' src="assets/images/{{style.name}}.png">
+      <br>
+      {{style.name}}
+    </button>
+  </div>
 </div>

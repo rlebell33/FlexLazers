@@ -18,6 +18,7 @@ export class AppComponent {
   toolModalShow = true;
   exitModalShow = true;
   windowModalShow = true;
+  settingsModalShow = true;
   writingTool; 
   background='#00000000'
 
@@ -121,6 +122,11 @@ export class AppComponent {
         this.cx.strokeStyle = this.colors[7].strokeStyle.concat('30')
       }
     }
+  }
+
+  settings(thing){
+    console.log(thing)
+    
   }
   
   screenCap(){
