@@ -2,6 +2,7 @@ import { Component,Input, ElementRef, AfterViewInit, ViewChild } from '@angular/
 import { fromEvent } from 'rxjs';
 import { switchMap, takeUntil, pairwise } from 'rxjs/operators'
 import { IpcRenderer } from 'electron';
+import { ChildProcess } from 'child_process';
 
 @Component({
   selector: 'app-root',
@@ -12,9 +13,11 @@ export class AppComponent {
   title = 'FlexLaserz-app';
   @ViewChild('canvas') public canvas: ElementRef;
 
+  private child_spawn: ChildProcess
+
   private cx: CanvasRenderingContext2D;
   private ipc: IpcRenderer;
-
+  
   toolModalShow = true;
   exitModalShow = true;
   windowModalShow = true;
@@ -156,6 +159,13 @@ export class AppComponent {
       .subscribe((res: [MouseEvent, MouseEvent]) => {
         const rect = canvasEl.getBoundingClientRect();
         // previous and current position with the offset
+        // var spawn = require('child_process').spawn,
+        // py = spawn('python', ['dot_track.py'])
+        // var fileName = ''
+        // py.stdout.on('data',function(data){
+        //   fileName += data.toString();
+        //   console.log(fileName)
+        // })
         const prevPos = {
           x: res[0].clientX - rect.left,
           y: res[0].clientY - rect.top
@@ -165,7 +175,9 @@ export class AppComponent {
           x: res[1].clientX - rect.left,
           y: res[1].clientY - rect.top
         };
-  
+        
+        console.log(prevPos)
+        console.log(currentPos)
         // this method we'll implement soon to do the actual drawing
         this.drawOnCanvas(prevPos, currentPos);
       });

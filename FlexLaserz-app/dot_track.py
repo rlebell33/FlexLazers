@@ -9,12 +9,13 @@
 
 import SimpleCV
 import pygame as pg
+import numpy as np
 #import cv2
 
 display = SimpleCV.Display()
 
 #0 For built in Camera | 1 For USB Camera
-cam = SimpleCV.Camera(1)
+cam = SimpleCV.Camera()
 
 normaldisplay = True
 
@@ -25,8 +26,13 @@ dispmode = 0
 
 #RGB settings (currently tunned to best find RED on a PROJECTOR SCREEN)(NOT OTHER SURFACES)
 r = 0
-g = 200
-bx = 150
+g = 0
+bx = 0
+
+# original values
+#r = 0
+#g = 200
+#bx = 150
 
 #Max and min area of squares found
 area_upperbound = 130
@@ -43,41 +49,41 @@ while display.isNotDone():
         if display.mouseRight:
 
                 dispmode = (dispmode + 1) % 3
-                print dispmode
+                #print dispmode
 
-        pressed = pg.key.get_pressed()
-        if pressed[pg.K_q]:
-            r += 1
-            print r, g, bx
-        if pressed[pg.K_w]:
-            r -= 1
-            print r, g, bx
-        if pressed[pg.K_a]:
-            g += 1
-            print r, g, bx
-        if pressed[pg.K_s]:
-            g -= 1
-            print r, g, bx
-        if pressed[pg.K_z]:
-            bx += 1
-            print r, g, bx
-        if pressed[pg.K_x]:
-            bx -= 1
-            print r, g, bx
-        if pressed[pg.K_d]:
-            d += 0.01
-            print d
-        if pressed[pg.K_f]:
-            d -= 0.01
-            print d
+        # pressed = pg.key.get_pressed()
+        # if pressed[pg.K_q]:
+        #     r += 1
+        #     print r, g, bx
+        # if pressed[pg.K_w]:
+        #     r -= 1
+        #     print r, g, bx
+        # if pressed[pg.K_a]:
+        #     g += 1
+        #     print r, g, bx
+        # if pressed[pg.K_s]:
+        #     g -= 1
+        #     print r, g, bx
+        # if pressed[pg.K_z]:
+        #     bx += 1
+        #     print r, g, bx
+        # if pressed[pg.K_x]:
+        #     bx -= 1
+        #     print r, g, bx
+        # if pressed[pg.K_d]:
+        #     d += 0.01
+        #     print d
+        # if pressed[pg.K_f]:
+        #     d -= 0.01
+        #     print d
                 
 ######################################################################################################################################
             
         #Use this if using built in webcam
-        #img = cam.getImage().flipHorizontal()
+        img = cam.getImage().flipHorizontal()
 
         #Use this if using USB webcam
-        img = cam.getImage()
+        #img = cam.getImage()
 
         #Could also try img.hueDistance. Uses HSV. Maybe better for diffrent lighting conditions of classrooms on muiltiple surfaces. 
         dist = img.colorDistance((r,g,bx)).dilate(2)
@@ -96,9 +102,14 @@ while display.isNotDone():
                 #Debug: Prints area of the circles for the found sqaure objects
                 for squ in squares:
                         
-                        print squ.area()
-
-                        img.drawCircle((squ.x, squ.y), squ.radius(),SimpleCV.Color.BLUE,3)
+                        #print 'squre'+squ.area()
+                        #print(pg.MOUSEBUTTONDOWN)
+                        #print(pg.mouse.get_pos(img.drawCircle((squ.x, squ.y), squ.radius(),SimpleCV.Color.GREEN,3)))
+                        
+                        img.drawCircle((squ.x, squ.y), squ.radius(),SimpleCV.Color.GREEN,3)
+                        #print("squares: "+str(squ.x),str(squ.y))
+                        print(squ.x,squ.y)
+                        #print("cursor: "+str(pg.mouse.get_pos()))
                         
 ########################################################################################################################################
         if dispmode == 0:

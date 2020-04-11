@@ -8,5 +8,6 @@ def screenshot():
     screenshot = pyautogui.screenshot()
     dir_path = os.path.dirname(os.path.realpath(__file__))+'/screenshots/'+fileName
     screenshot.save(dir_path)
+    print(fileName)
     
 screenshot()
