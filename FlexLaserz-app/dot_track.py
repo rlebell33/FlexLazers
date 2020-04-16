@@ -29,7 +29,9 @@ r = 0
 g = 0
 bx = 0
 
-i = 0
+# Set printDelay to X number of loops that should run between prints
+printCounter = 0
+printDelay = 5
 
 # original values
 #r = 0
@@ -111,11 +113,19 @@ while display.isNotDone():
                         
                         img.drawCircle((squ.x, squ.y), squ.radius(),SimpleCV.Color.GREEN,3)
                         #print("squares: "+str(squ.x),str(squ.y))
-                        #print(i)
-                        if(i%2==0):
+                        #print(printCounter)
+                        
+                        # should we print this frame?
+                        if(printCounter >= printDelay):
                                 print squ.x,squ.y
-                        i+=1
                         #print squ.x,squ.y
+                        
+                # reset print counter if just printed
+                if(printCounter >= printDelay):
+                    printCounter = 0
+                    
+                # increment print counter
+                printCounter += 1
                         
 ########################################################################################################################################
         if dispmode == 0:
