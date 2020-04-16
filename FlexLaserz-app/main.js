@@ -1,6 +1,7 @@
-const {app, BrowserWindow, screen, ipcMain} = require('electron')
+const {app, BrowserWindow, screen, ipcMain, ipcRenderer} = require('electron')
 const url = require("url");
 const path = require("path");
+const spawn = require('child_process').spawn
 const notifier = require('node-notifier');
 
 let mainWindow
@@ -17,6 +18,12 @@ function createWindow () {
       nodeIntegration: true
     }
   })
+  var py = spawn('python',['dot_track.py'])
+  coord = ''
+  py.stdout.on('data',function(data){
+    coord += data.toString();
+    console.log(coord)
+  })
   
   mainWindow.loadURL(
     url.format({
@@ -26,7 +33,7 @@ function createWindow () {
     })
   );
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 
   mainWindow.on('closed', function () {
     mainWindow = null
@@ -43,11 +50,11 @@ function notificaiton(Title, Message, Icon){
 }
 
 ipcMain.on('screenCap', () => {
-  var spawn = require('child_process').spawn,
   py = spawn('python', ['screenshot.py'])
   fileName = ''
   py.stdout.on('data',function(data){
     fileName += data.toString();
+    console.log(fileName)
   })
   setTimeout(() =>{
     notificaiton(fileName,'Image successfully saved! ',path.join(path.join(__dirname,'/screenshots'),fileName))},1000)

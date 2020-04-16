@@ -9,7 +9,7 @@
 
 import SimpleCV
 import pygame as pg
-import numpy as np
+#import numpy as np
 #import cv2
 
 display = SimpleCV.Display()
@@ -28,6 +28,8 @@ dispmode = 0
 r = 0
 g = 0
 bx = 0
+
+i = 0
 
 # original values
 #r = 0
@@ -106,10 +108,14 @@ while display.isNotDone():
                         #print(pg.MOUSEBUTTONDOWN)
                         #print(pg.mouse.get_pos(img.drawCircle((squ.x, squ.y), squ.radius(),SimpleCV.Color.GREEN,3)))
                         
+                        
                         img.drawCircle((squ.x, squ.y), squ.radius(),SimpleCV.Color.GREEN,3)
                         #print("squares: "+str(squ.x),str(squ.y))
-                        print(squ.x,squ.y)
-                        #print("cursor: "+str(pg.mouse.get_pos()))
+                        #print(i)
+                        if(i%2==0):
+                                print squ.x,squ.y
+                        i+=1
+                        #print squ.x,squ.y
                         
 ########################################################################################################################################
         if dispmode == 0:

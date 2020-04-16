@@ -1,8 +1,8 @@
 import { Component,Input, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { switchMap, takeUntil, pairwise } from 'rxjs/operators'
-import { IpcRenderer } from 'electron';
-import { ChildProcess } from 'child_process';
+import { IpcRenderer, IpcMain} from 'electron';
+// import { spawn } from 'child_process'
 
 @Component({
   selector: 'app-root',
@@ -13,10 +13,9 @@ export class AppComponent {
   title = 'FlexLaserz-app';
   @ViewChild('canvas') public canvas: ElementRef;
 
-  private child_spawn: ChildProcess
-
   private cx: CanvasRenderingContext2D;
-  private ipc: IpcRenderer;
+  private ipcrenderer: IpcRenderer;
+  private ipcmain: IpcMain;
   
   toolModalShow = true;
   exitModalShow = true;
@@ -87,7 +86,7 @@ export class AppComponent {
   constructor(){
     if ((<any>window).require) {
       try {
-        this.ipc = (<any>window).require('electron').ipcRenderer;
+        this.ipcrenderer = (<any>window).require('electron').ipcRenderer;
       } catch (e) {
         throw e;
       }
@@ -101,7 +100,7 @@ export class AppComponent {
     this.cx.lineWidth = tool.lineWidth
     this.cx.lineCap = tool.lineCap
     this.cx.strokeStyle = tool.strokeStyle
-    this.ipc.send('toolModal',tool.name)
+    this.ipcrenderer.send('toolModal',tool.name)
   }
 
   selectedColor(color){
@@ -111,7 +110,7 @@ export class AppComponent {
     else if (this.writingTool == 'Highlighter'){
       this.cx.strokeStyle = color.strokeStyle.concat('30')
     }
-    this.ipc.send('toolModal',color.name)
+    this.ipcrenderer.send('toolModal',color.name)
   }
 
   windowStyle(windowStyle){
@@ -127,10 +126,11 @@ export class AppComponent {
   }
   
   screenCap(){
-    this.ipc.send("screenCap");
+    this.ipcrenderer.send("screenCap");
   }
+
   exit(){
-    this.ipc.send('exit');
+    this.ipcrenderer.send('exit');
   }
 
   clearScreen(){
@@ -158,13 +158,14 @@ export class AppComponent {
       )
       .subscribe((res: [MouseEvent, MouseEvent]) => {
         const rect = canvasEl.getBoundingClientRect();
-        // previous and current position with the offset
-        // var spawn = require('child_process').spawn,
-        // py = spawn('python', ['dot_track.py'])
-        // var fileName = ''
-        // py.stdout.on('data',function(data){
-        //   fileName += data.toString();
-        //   console.log(fileName)
+        //  var py = spawn('python',['dot_track.py'])
+        //  var coords = ''
+        //  py.stdout.on('coords',function(){
+        //   coords += coords.toString();
+        //   console.log(coords)
+        //  })
+        // this.ipcrenderer.on('coord',(coord)=>{
+        //   console.log(coord)
         // })
         const prevPos = {
           x: res[0].clientX - rect.left,
@@ -176,8 +177,8 @@ export class AppComponent {
           y: res[1].clientY - rect.top
         };
         
-        console.log(prevPos)
-        console.log(currentPos)
+        // console.log(prevPos)
+        // console.log(currentPos)
         // this method we'll implement soon to do the actual drawing
         this.drawOnCanvas(prevPos, currentPos);
       });
