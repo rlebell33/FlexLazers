@@ -26,8 +26,8 @@ dispmode = 0
 
 #RGB settings (currently tunned to best find RED on a PROJECTOR SCREEN)(NOT OTHER SURFACES)
 r = 0
-g = 0
-bx = 0
+g = 200
+bx = 150
 
 # Set printDelay to X number of loops that should run between prints
 printCounter = 0
