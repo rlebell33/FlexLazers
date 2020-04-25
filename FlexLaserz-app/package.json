@@ -9,7 +9,7 @@
     "test": "mocha",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "start-e": "concurrently --kill-others \"cd .. && python dot_track.py\" \"ng build --base-href ./ && electron .\""
+    "start-e": "concurrently --kill-others --handle-input \"python dot_track.py\" \"ng build --base-href ./ && electron .\""
   },
   "private": true,
   "dependencies": {
