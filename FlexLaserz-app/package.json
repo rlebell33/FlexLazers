@@ -9,7 +9,7 @@
     "test": "mocha",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "start-e": "ng build --base-href ./ && electron ."
+    "start-e": "concurrently --kill-others \"cd .. && python dot_track.py\" \"ng build --base-href ./ && electron .\""
   },
   "private": true,
   "dependencies": {
@@ -37,6 +37,7 @@
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "codelyzer": "^5.1.2",
+    "concurrently": "^5.1.0",
     "electron": "^8.0.1",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
