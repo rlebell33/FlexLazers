@@ -18,12 +18,12 @@ function createWindow () {
       nodeIntegration: true
     }
   })
-  var py = spawn('python',['dot_track.py'])
-  coord = ''
-  py.stdout.on('data',function(data){
-    coord += data.toString();
-    console.log(coord)
-  })
+  // var py = spawn('python',['dot_track.py'])
+  // coord = ''
+  // py.stdout.on('data',function(data){
+  //   coord += data.toString();
+  //   console.log(coord)
+  // })
   
   mainWindow.loadURL(
     url.format({

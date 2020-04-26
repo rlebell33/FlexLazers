@@ -2,7 +2,6 @@ import { Component,Input, ElementRef, AfterViewInit, ViewChild } from '@angular/
 import { fromEvent } from 'rxjs';
 import { switchMap, takeUntil, pairwise } from 'rxjs/operators'
 import { IpcRenderer, IpcMain} from 'electron';
-// import { spawn } from 'child_process'
 
 @Component({
   selector: 'app-root',
@@ -16,7 +15,7 @@ export class AppComponent {
   private cx: CanvasRenderingContext2D;
   private ipcrenderer: IpcRenderer;
   private ipcmain: IpcMain;
-  
+
   toolModalShow = true;
   exitModalShow = true;
   windowModalShow = true;
@@ -158,17 +157,9 @@ export class AppComponent {
       )
       .subscribe((res: [MouseEvent, MouseEvent]) => {
         const rect = canvasEl.getBoundingClientRect();
-        //  var py = spawn('python',['dot_track.py'])
-        //  var coords = ''
-        //  py.stdout.on('coords',function(){
-        //   coords += coords.toString();
-        //   console.log(coords)
-        //  })
-        // this.ipcrenderer.on('coord',(coord)=>{
-        //   console.log(coord)
-        // })
+        // python output
         const prevPos = {
-          x: res[0].clientX - rect.left,
+          x: res[0].clientX - rect.left,  //x: res[0].clientX - python.x,
           y: res[0].clientY - rect.top
         };
   
