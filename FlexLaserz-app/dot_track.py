@@ -9,6 +9,7 @@
 
 import SimpleCV
 import pygame as pg
+import sys
 #import numpy as np
 #import cv2
 
@@ -117,7 +118,8 @@ while display.isNotDone():
                         
                         # should we print this frame?
                         if(printCounter >= printDelay):
-                                print squ.x,squ.y
+                                sys.stdout = open("data.txt", "w")
+                                print (squ.x,squ.y)
                         #print squ.x,squ.y
                         
                 # reset print counter if just printed

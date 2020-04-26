@@ -2,6 +2,7 @@ import { Component,Input, ElementRef, AfterViewInit, ViewChild } from '@angular/
 import { fromEvent } from 'rxjs';
 import { switchMap, takeUntil, pairwise } from 'rxjs/operators'
 import { IpcRenderer, IpcMain} from 'electron';
+import { readFileSync } from 'fs';
 
 @Component({
   selector: 'app-root',
@@ -158,6 +159,9 @@ export class AppComponent {
       .subscribe((res: [MouseEvent, MouseEvent]) => {
         const rect = canvasEl.getBoundingClientRect();
         // python output
+        const FILE = readFileSync(__dirname+'/data.txt','utf-8')
+        // console.log('Hello'+FILE)
+        console.log(__dirname+'/data.txt')
         const prevPos = {
           x: res[0].clientX - rect.left,  //x: res[0].clientX - python.x,
           y: res[0].clientY - rect.top
