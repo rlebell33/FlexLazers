@@ -15,7 +15,8 @@ export class AppComponent {
 
   private cx: CanvasRenderingContext2D;
   private ipcrenderer: IpcRenderer;
-  private ipcmain: IpcMain;
+  // private ipcmain: IpcMain;
+  private fs = (<any>window).require('fs')
 
   toolModalShow = true;
   exitModalShow = true;
@@ -158,10 +159,9 @@ export class AppComponent {
       )
       .subscribe((res: [MouseEvent, MouseEvent]) => {
         const rect = canvasEl.getBoundingClientRect();
-        // python output
-        const FILE = readFileSync(__dirname+'/data.txt','utf-8')
-        // console.log('Hello'+FILE)
-        console.log(__dirname+'/data.txt')
+        this.fs.readFile(('./data.txt'),(data)=>{
+          console.log(data)
+        })
         const prevPos = {
           x: res[0].clientX - rect.left,  //x: res[0].clientX - python.x,
           y: res[0].clientY - rect.top
