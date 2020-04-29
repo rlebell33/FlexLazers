@@ -119,7 +119,7 @@ while display.isNotDone():
                         # should we print this frame?
                         if(printCounter >= printDelay):
                                 sys.stdout = open("data.txt", "w")
-                                print squ.x,squ.y
+                                print squ.x,squ.y, display.resolution[0], display.resolution[1]
                         #print squ.x,squ.y
                         
                 # reset print counter if just printed

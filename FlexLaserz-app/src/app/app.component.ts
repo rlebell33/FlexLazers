@@ -163,17 +163,18 @@ export class AppComponent {
       .subscribe((res: [MouseEvent, MouseEvent]) => {
         const rect = canvasEl.getBoundingClientRect();
         this.fs.readFile('data.txt','utf8',(err,data)=>{
-          var Data = data.split(' ',2)
-          console.log(Data)
+          var Data = data.split(' ',4)
+          var deltaX = window.innerWidth/Data[2]
+          var deltaY = window.innerHeight/Data[3]
           if (this.currentX==0 && this.currentY==0){
-            this.currentX = Data[0]
-            this.currentY = Data[1]
+            this.currentX = Data[0]*deltaX
+            this.currentY = Data[1]*deltaY
           }
           else{
             this.previousX = this.currentX
             this.previousY = this.currentY
-            this.currentX = Data[0]
-            this.currentY = Data[1]
+            this.currentX = Data[0]*deltaX
+            this.currentY = Data[1]*deltaY
           }
           const prevPos = {
             x: this.previousX - rect.left,
