@@ -9,6 +9,7 @@
 
 import SimpleCV
 #import pygame as pg
+import pyautogui
 import sys
 #import numpy as np
 #import cv2
@@ -117,6 +118,11 @@ while display.isNotDone():
                         #print(printCounter)
                         
                         # should we print this frame?
+                        deltaX = pyautogui.size().width/display.resolution[0]
+                        deltaY = pyautogui.size().height/display.resolution[1]
+                        mouseX = squ.x*3
+                        mouseY = squ.y*2.25
+                        pyautogui.moveTo(mouseX,mouseY)
                         if(printCounter >= printDelay):
                                 sys.stdout = open("data.txt", "w")
                                 print squ.x,squ.y, display.resolution[0], display.resolution[1]
