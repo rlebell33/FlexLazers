@@ -2,7 +2,6 @@ import { Component,Input, ElementRef, AfterViewInit, ViewChild } from '@angular/
 import { fromEvent } from 'rxjs';
 import { switchMap, takeUntil, pairwise } from 'rxjs/operators'
 import { IpcRenderer, IpcMain} from 'electron';
-import { readFileSync } from 'fs';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +21,10 @@ export class AppComponent {
   exitModalShow = true;
   windowModalShow = true;
   writingTool; 
+  currentX=0;
+  currentY=0;
+  previousX=0;
+  previousY=0;
   background='#00000000'
 
   tools =[{
@@ -159,23 +162,32 @@ export class AppComponent {
       )
       .subscribe((res: [MouseEvent, MouseEvent]) => {
         const rect = canvasEl.getBoundingClientRect();
-        this.fs.readFile(('./data.txt'),(data)=>{
-          console.log(data)
+        this.fs.readFile('data.txt','utf8',(err,data)=>{
+          var Data = data.split(' ',2)
+          console.log(Data)
+          if (this.currentX==0 && this.currentY==0){
+            this.currentX = Data[0]
+            this.currentY = Data[1]
+          }
+          else{
+            this.previousX = this.currentX
+            this.previousY = this.currentY
+            this.currentX = Data[0]
+            this.currentY = Data[1]
+          }
+          const prevPos = {
+            x: this.previousX - rect.left,
+            y: this.previousY - rect.top
+          };
+    
+          const currentPos = {
+            x: this.currentX - rect.left,
+            y: this.currentY - rect.top
+          };
+          
+          // this method we'll implement soon to do the actual drawing
+          this.drawOnCanvas(prevPos, currentPos);
         })
-        const prevPos = {
-          x: res[0].clientX - rect.left,  //x: res[0].clientX - python.x,
-          y: res[0].clientY - rect.top
-        };
-  
-        const currentPos = {
-          x: res[1].clientX - rect.left,
-          y: res[1].clientY - rect.top
-        };
-        
-        // console.log(prevPos)
-        // console.log(currentPos)
-        // this method we'll implement soon to do the actual drawing
-        this.drawOnCanvas(prevPos, currentPos);
       });
   }
 

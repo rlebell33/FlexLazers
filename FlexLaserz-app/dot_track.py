@@ -8,7 +8,7 @@
 #Make sure pyhton 2.7 is set to PATH in windows
 
 import SimpleCV
-import pygame as pg
+#import pygame as pg
 import sys
 #import numpy as np
 #import cv2
@@ -32,7 +32,7 @@ bx = 150
 
 # Set printDelay to X number of loops that should run between prints
 printCounter = 0
-printDelay = 5
+printDelay = 0
 
 # original values
 #r = 0
@@ -119,7 +119,7 @@ while display.isNotDone():
                         # should we print this frame?
                         if(printCounter >= printDelay):
                                 sys.stdout = open("data.txt", "w")
-                                print (squ.x,squ.y)
+                                print squ.x,squ.y
                         #print squ.x,squ.y
                         
                 # reset print counter if just printed
