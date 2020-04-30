@@ -19,6 +19,7 @@ export class AppComponent {
 
   toolModalShow = true;
   exitModalShow = true;
+  drawing = false;
   windowModalShow = true;
   writingTool; 
   currentX=0;
@@ -85,6 +86,10 @@ export class AppComponent {
     this.cx.strokeStyle = '#000';
 
     this.captureEvents(canvasEl);
+    setInterval(()=>{
+      this.captureEvents(canvasEl)},
+      0
+    )
   }
 
   constructor(){
@@ -143,53 +148,55 @@ export class AppComponent {
 
   private captureEvents(canvasEl: HTMLCanvasElement) {
     // this will capture all mousedown events from the canvas element
-    fromEvent(canvasEl, 'mousedown')
-      .pipe(
-        switchMap((e) => {
-          // after a mouse down, we'll record all mouse moves
-          return fromEvent(canvasEl, 'mousemove')
-            .pipe(
-              // we'll stop (and unsubscribe) once the user releases the mouse
-              // this will trigger a 'mouseup' event    
-              takeUntil(fromEvent(canvasEl, 'mouseup')),
-              // we'll also stop (and unsubscribe) once the mouse leaves the canvas (mouseleave event)
-              takeUntil(fromEvent(canvasEl, 'mouseleave')),
-              // pairwise lets us get the previous value to draw a line from
-              // the previous point to the current point    
-              pairwise()
-            )
-        })
-      )
-      .subscribe((res: [MouseEvent, MouseEvent]) => {
-        const rect = canvasEl.getBoundingClientRect();
-        this.fs.readFile('data.txt','utf8',(err,data)=>{
-          var Data = data.split(' ',4)
-          var deltaX = window.innerWidth/Data[2]
-          var deltaY = window.innerHeight/Data[3]
-          if (this.currentX==0 && this.currentY==0){
-            this.currentX = Data[0]*deltaX
-            this.currentY = Data[1]*deltaY
-          }
-          else{
-            this.previousX = this.currentX
-            this.previousY = this.currentY
-            this.currentX = Data[0]*deltaX
-            this.currentY = Data[1]*deltaY
-          }
-          const prevPos = {
-            x: this.previousX - rect.left,
-            y: this.previousY - rect.top
-          };
+    // fromEvent(canvasEl, 'mousedown')
+    //   .pipe(
+    //     switchMap((e) => {
+    //       // after a mouse down, we'll record all mouse moves
+    //       return fromEvent(canvasEl, 'mousemove')
+    //         .pipe(
+    //           // we'll stop (and unsubscribe) once the user releases the mouse
+    //           // this will trigger a 'mouseup' event    
+    //           takeUntil(fromEvent(canvasEl, 'mouseup')),
+    //           // we'll also stop (and unsubscribe) once the mouse leaves the canvas (mouseleave event)
+    //           takeUntil(fromEvent(canvasEl, 'mouseleave')),
+    //           // pairwise lets us get the previous value to draw a line from
+    //           // the previous point to the current point    
+    //           pairwise()
+    //         )
+    //     })
+    //   )
+    //   .subscribe((res: [MouseEvent, MouseEvent]) => {
+  const rect = canvasEl.getBoundingClientRect();
+  this.fs.readFile('data.txt','utf8',(err,data)=>{
+    var Data = data.split(' ',4)
+    var deltaX = window.innerWidth/Data[2]
+    var deltaY = window.innerHeight/Data[3]
+    if (this.currentX==0 && this.currentY==0){
+      this.currentX = Data[0]*deltaX
+      this.currentY = Data[1]*deltaY
+    }
+    else{
+      this.previousX = this.currentX
+      this.previousY = this.currentY
+      this.currentX = Data[0]*deltaX
+      this.currentY = Data[1]*deltaY
+    }
+    const prevPos = {
+      x: this.previousX - rect.left,
+      y: this.previousY - rect.top
+    };
+
+    const currentPos = {
+      x: this.currentX - rect.left,
+      y: this.currentY - rect.top
+    };
+    // this method we'll implement soon to do the actual drawing
+    if(this.drawing){
+      this.drawOnCanvas(prevPos, currentPos);
+    }
     
-          const currentPos = {
-            x: this.currentX - rect.left,
-            y: this.currentY - rect.top
-          };
-          
-          // this method we'll implement soon to do the actual drawing
-          this.drawOnCanvas(prevPos, currentPos);
-        })
-      });
+  })
+      // });
   }
 
   private drawOnCanvas(prevPos: { x: number, y: number }, currentPos: { x: number, y: number }) {

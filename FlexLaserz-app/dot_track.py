@@ -86,10 +86,10 @@ while display.isNotDone():
 ######################################################################################################################################
             
         #Use this if using built in webcam
-        img = cam.getImage().flipHorizontal()
+        #img = cam.getImage().flipHorizontal()
 
         #Use this if using USB webcam
-        #img = cam.getImage()
+        img = cam.getImage()
 
         #Could also try img.hueDistance. Uses HSV. Maybe better for diffrent lighting conditions of classrooms on muiltiple surfaces. 
         dist = img.colorDistance((r,g,bx)).dilate(2)
@@ -118,10 +118,10 @@ while display.isNotDone():
                         #print(printCounter)
                         
                         # should we print this frame?
-                        deltaX = pyautogui.size().width/display.resolution[0]
-                        deltaY = pyautogui.size().height/display.resolution[1]
-                        mouseX = squ.x*3
-                        mouseY = squ.y*2.25
+                        deltaX = float(pyautogui.size().width)/float(display.resolution[0])
+                        deltaY = float(pyautogui.size().height)/float(display.resolution[1])
+                        mouseX = squ.x*deltaX
+                        mouseY = squ.y*deltaY
                         pyautogui.moveTo(mouseX,mouseY)
                         if(printCounter >= printDelay):
                                 sys.stdout = open("data.txt", "w")

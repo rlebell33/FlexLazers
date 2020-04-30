@@ -1,6 +1,9 @@
 <div id="container">
   <canvas #canvas [style.background-color]='background'></canvas>
   <div id='footer' >
+    <button (hesitate)='drawing=!drawing' [duration] = "1500">
+      <p class ='icon'>Hello</p>
+    </button>
     <button (hesitate)='toolModalShow=false' [duration] = "1500">
       <img class='icon' src="assets/images/pencil.png" alt="Pencil" width="42" height="42">
     </button>
